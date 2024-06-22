@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User
+from .models import User, Restaurant, Bookings, Image
 from .forms import AddUser, LogUser
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib import messages
@@ -8,11 +8,45 @@ import re
 
 def index(request):
     return render(request, 'main/index.html')
-
+   
 # @login_required
 def home(request):
-    print(request.user)
-    return render(request, 'main/home.html')
+    restaurants = Restaurant.objects.all()
+    data = []
+    for restaurant in restaurants:   
+        data.append({
+            "id": restaurant.id,
+            "name": restaurant.name,
+            "description": restaurant.description,
+            "rating": restaurant.rating,
+            "address": restaurant.address,
+            "cuisine": restaurant.cuisine,
+            "phone": restaurant.phone,
+            "email": restaurant.email,
+            "image": str(list(Image.objects.filter(restaurant=restaurant))[0].image)[4:],
+        })
+    return render(request, 'main/home.html', {'data': data})
+
+def profile(request):
+    return render(request, 'main/profile.html')
+
+def logout(request):
+    auth_logout(request)
+    return render(request, 'main/logout.html')
+     
+def details(request, pk):
+    restaurant = Restaurant.objects.get(id=pk)
+    context = {
+        "name": restaurant.name,
+        "description": restaurant.description,
+        "rating": restaurant.rating,
+        "address": restaurant.address,
+        "cuisine": restaurant.cuisine,
+        "phone": restaurant.phone,
+        "email": restaurant.email,
+        "images": [str(img.image)[4:] for img in Image.objects.filter(restaurant=restaurant)],
+    }
+    return render(request, 'main/details.html', context) 
 
 def login(request):
     if request.method == "POST":

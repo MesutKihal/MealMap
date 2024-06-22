@@ -1,14 +1,57 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+{% load static %}
     <meta charset="UTF-8">
-    <title>{{ restaurant.name }} Details</title>
-    <!-- Add your CSS and other stylesheets here -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مائدة بلادي</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>{{ restaurant.name }}</h1>
-    <p>{{ restaurant.description }}</p>
-    <p>Location: {{ restaurant.location }}</p>
-    <!-- Add more details as needed -->
+    <header>
+        <h2 class="header-white">مائدة بلادي</h2>
+        <p>بسط حجوزاتك في المطاعم</p>
+        <nav>
+            <ul>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'home' %}">الرئيسية</a></li>
+					<li><a href="{% url 'profile' %}">الحجوزات</a></li>
+					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
+				{% else %}
+					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
+					<li><a href="{% url 'signup' %}">إنشاء حساب</a></li>
+				{% endif %}
+            </ul>
+        </nav>
+    </header>
+	<section>
+		<h1>{{ name }}</h1>
+		<div class="flex-row">
+			<div class="gallery">
+				{% for img in images %}
+					<img class="gallery-img" src="{{ img }}" alt="{{ name }}">
+				{% endfor %}
+			</div>
+			<div class="flex-column">
+				<p>التقييم<strong class="badge">{{ rating }}</strong></p>
+				<iframe
+				  id="map"
+				  width="100%"
+				  frameborder="0" style="border:0"
+				  src="https://www.openstreetmap.org/search?whereami=1&query=36.35977%2C6.61535#map=17/36.35977/6.61535" allowfullscreen>
+				</iframe>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>الوصف</h2>
+		<p>المطبخ: {{ cuisine }}</p>
+		<p>{{ description }}</p>
+		
+		<h2>معلومات إضافية</h2>
+		<p>العنوان: {{ address }}</p>
+		<p style="display: flex; justify-content: flex-end" dir="ltr">{{ phone }} :الهاتف</p>
+		<p>البريد الإلكتروني: {{ email }}</p>
+	</section>
 </body>
 </html>

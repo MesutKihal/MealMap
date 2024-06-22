@@ -102,9 +102,24 @@ button {
 }
 
 button:hover {
-    background: #555;
-	color: #fff;
+    background: #fff;
+	color: #900C3F;
+	border: 1px solid #900C3F;
 }
+
+.reversed-btn {
+    background: #fff;
+	color: #900C3F;
+	border: 1px solid #900C3F;
+
+}
+
+.reversed-btn:hover {
+    background: #900C3F;
+	color: #fff;
+	border: 1px solid #fff;
+}
+
 
 a {
     color: #0066cc;
@@ -217,4 +232,59 @@ footer {
 
 .active, .dot:hover {
   background-color: #717171;
+}
+
+
+.header-white {
+	color: white;
+	font-size: 50px;
+}
+
+
+.gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 10px;
+	padding: 20px;
+}
+
+.gallery img {
+	width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 8px;
+}
+
+.gallery-img:hover {
+  transform: scale(1.5); /* Scale up by 10% on hover */
+}
+
+.gallery-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+}
+
+.badge {
+	background: #900C3F;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px;
+	border-radius: 2px;
 }

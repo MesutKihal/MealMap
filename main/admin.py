@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(User)
 admin.site.register(Restaurant)
 admin.site.register(Bookings)
+admin.site.register(Image)

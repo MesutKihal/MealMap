@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+{% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مائدة بلادي - الصفحة الرئيسية</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h2 style="color: white; font-size: 50px;">مائدة بلادي</h2>
+        <p>بسط حجوزاتك في المطاعم</p>
+        <nav>
+            <ul>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'profile' %}">الحجوزات</a></li>
+					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
+				{% else %}
+					<li><a href="{% url 'index' %}">الرئيسية</a></li>
+					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
+					<li><a href="{% url 'signup' %}">إنشاء حساب</a></li>
+				{% endif %}
+            </ul>
+        </nav>
+    </header>
+	<section id="hero">
+		<p>تم تسجيل الخروج من الموقع بنجاح</p>
+	</section>
+    <footer>
+        <p>&copy; 2024 مائدة بلادي - احجز، استمتع، استفد!</p>
+    </footer>
+	
+</body>
+</html>

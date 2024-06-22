@@ -6,26 +6,27 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
     
+
+class Restaurant(models.Model):
+    name = models.CharField(max_length=64)
+    description = models.TextField(default="")
+    rating = models.IntegerField(default=1)
+    address = models.CharField(max_length=64, default="unknown")
+    cuisine = models.CharField(max_length=64, default="unknown")
+    phone = models.CharField(max_length=16, default="+xxx-xxx-xxx-xxx")
+    email = models.CharField(max_length=64, default="noreply@example.com")
+    
+    def __str__(self):
+        return self.name
+        
     
 class Image(models.Model):
     title = models.CharField(max_length=64)
     image = models.ImageField(upload_to='main/static/img/restaurants/')
+    restaurant = models.ForeignKey(Restaurant, default=None,on_delete=models.CASCADE)
     def __str__(self):
         return self.title
 
-class Restaurant(models.Model):
-    name = models.CharField(max_length=64)
-    description = models.TextField()
-    rating = models.IntegerField(default=1)
-    address = models.CharField(max_length=64)
-    cuisine = models.CharField(max_length=64)
-    phone = models.CharField(max_length=16)
-    email = models.CharField(max_length=64)
-    images = models.ManyToManyField(Image, related_name='images')
-    def __str__(self):
-        return self.name
-        
-        
         
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

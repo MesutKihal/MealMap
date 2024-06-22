@@ -9,13 +9,14 @@
 </head>
 <body>
     <header>
-        <h2 style="color: white; font-size: 50px;">مائدة بلادي</h2>
+        <h2 class="header-white">مائدة بلادي</h2>
         <p>بسط حجوزاتك في المطاعم</p>
         <nav>
             <ul>
 				{% if user.is_authenticated %}
-					<li><a href="{% url 'profile' %}">الحساب</a></li>
-					<li><a href="{% url 'logout' %}">إنشاء حساب</a></li>
+					<li><a href="{% url 'home' %}">الرئيسية</a></li>
+					<li><a href="{% url 'profile' %}">الحجوزات</a></li>
+					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
 				{% else %}
 					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
 					<li><a href="{% url 'signup' %}">إنشاء حساب</a></li>
@@ -96,33 +97,17 @@
 
         <section id="restaurants">
             <h2>المطاعم الشهيرة</h2>
-            <div class="restaurant">
-                <img src="{% static 'img/restaurant1.jpg' %}" alt="مطعم 1">
-                <h3>ماريان</h3>
-                <p>نوع المطبخ: إيطالي</p>
-                <p>التقييم: 4.5 نجوم</p>
-				{% if user.is_authenticated %}
-					<button>احجز</button>
-				{% endif %}
-            </div>
-            <div class="restaurant">
-                <img src="{% static 'img/restaurant2.jpg' %}" alt="مطعم 2">
-                <h3>ميراي</h3>
-                <p>نوع المطبخ: ياباني</p>
-                <p>التقييم: 4.8 نجوم</p>
-				{% if user.is_authenticated %}
-					<button>احجز</button>
-				{% endif %}
-            </div>
-            <div class="restaurant">
-                <img src="{% static 'img/restaurant3.jpg' %}" alt="مطعم 3">
-                <h3>شاتو دو</h3>
-                <p>نوع المطبخ: فرنسي</p>
-                <p>التقييم: 4.2 نجوم</p>
-				{% if user.is_authenticated %}
-					<button>احجز</button>
-				{% endif %}
-            </div>
+			{% for res in data %}
+				<div class="restaurant" data-id="{{ res.id }}">
+					<img src="{{ res.image }}" alt="{{ res.name }}">
+					<a style="text-decoration: none;color: #000;" href="{% url 'details' res.id %}"><h3>{{ res.name }}</h3></a>
+					<p>المطبخ: {{ res.cuisine }}</p>
+					<p>التقييم: {{ res.rating }}</p>
+					{% if user.is_authenticated %}
+						<a href="{% url 'details' res.id %}"><button>احجز</button></a>
+					{% endif %}
+				</div>
+			{% endfor %}
         </section>
     </main>
 

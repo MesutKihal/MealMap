@@ -15,7 +15,7 @@
     </header>
 
     <main>
-        <section id="signup">
+        <section id="signup" class="panel">
             <h2>إنشاء حساب</h2>
             <form action="{% url 'signup' %}" method="post">
 				{% csrf_token %}
@@ -51,9 +51,5 @@
             <p> لديك حساب <a href="{% url 'login' %}">سجل الدخول</a></p>
         </section>
     </main>
-
-    <footer>
-        <p>&copy; مائدة بلادي -احجز، تذوق، استمتع!</p>
-    </footer>
 </body>
 </html>
