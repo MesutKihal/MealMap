@@ -4,79 +4,78 @@
 {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReservEAT - Simplifiez vos réservations de restaurants</title>
+    <title>مائدة بلادي - Simplifiez vos réservations de restaurants</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Lien vers le fichier CSS -->
 </head>
-<body>
+<body dir="rtl">
     <header>
-        <img height="200" width="200" src="{% static 'img/hero-image.png' %}"></img>
-        <p>Simplifiez vos réservations de restaurants</p>
+		<h2 style="color: white; font-size: 50px;">مائدة بلادي</h2>
+        <p>إحجز الأن</p>
 		<div>
-			<a href="{% url 'login' %}"><button>Se Connectez</button></a>
-			<a href="{% url 'signup' %}"><button>S'inscrire</button></a>
+			<a href="{% url 'login' %}"><button>تسجيل الدخول</button></a>
+			<a href="{% url 'signup' %}"><button>إنشاء حساب</button></a>
 		</div>
     </header>
 
     <main>
         <section id="description">
-            <h2>Description</h2>
+            <h2>الوصف</h2>
             <p>
-                ReservEAT est votre solution ultime pour réserver une table dans vos restaurants préférés en quelques clics seulement. Conçu pour offrir une expérience utilisateur exceptionnelle, ReservEAT vous permet de découvrir, choisir et réserver des restaurants facilement et rapidement.
+				مائدة بلادي هو حلك الأمثل لحجز طاولة في مطاعمك المفضلة بضع نقرات فقط. مصمم لتقديم تجربة مستخدم استثنائية، مائدة بلادي يتيح لك اكتشاف، اختيار، وحجز المطاعم بسهولة وسرعة.
             </p>
         </section>
 
         <section id="features">
-            <h2>Caractéristiques principales</h2>
+            <h2>الخصائص الرئيسية</h2>
             <ul>
                 <li>
-                    <strong>Recherche Intuitive:</strong>
-                    <p>Recherchez des restaurants par nom, type de cuisine, localisation, ou même par plats spécifiques. Utilisez des filtres avancés pour affiner vos recherches selon vos préférences alimentaires, les options de prix, les notes des utilisateurs, et plus encore.</p>
+                    <strong>بحث بديهي:</strong>
+                    <p>ابحث عن المطاعم بالاسم، نوع المطبخ، الموقع، أو حتى بالأطباق المحددة. استخدم الفلاتر المتقدمة لتضييق نطاق البحث وفقًا لتفضيلاتك الغذائية، خيارات الأسعار، تقييمات المستخدمين، وأكثر من ذلك.</p>
                 </li>
                 <li>
-                    <strong>Profils de Restaurants Détaillés:</strong>
-                    <p>Consultez des profils complets de chaque restaurant, incluant des photos, des menus, des horaires d'ouverture, des adresses, et des avis d'autres utilisateurs. Accédez à des informations sur les services offerts, comme les options de livraison, les plats végétariens, les aménagements pour les personnes handicapées, etc.</p>
+                    <strong>ملفات تعريف المطاعم المفصلة:</strong>
+                    <p>اطلع على ملفات تعريف كاملة لكل مطعم، بما في ذلك الصور، القوائم، ساعات العمل، العناوين، ومراجعات المستخدمين الآخرين. احصل على معلومات حول الخدمات المقدمة، مثل خيارات التوصيل، الأطباق النباتية، التسهيلات لذوي الاحتياجات الخاصة، وغيرها.</p>
                 </li>
                 <li>
-                    <strong>Réservations en Temps Réel:</strong>
-                    <p>Réservez votre table en temps réel, en choisissant l'heure et le nombre de personnes directement sur le site. Recevez des confirmations instantanées et des rappels automatiques par email ou SMS.</p>
+                    <strong>الحجوزات في الوقت الفعلي:</strong>
+                    <p>احجز طاولتك في الوقت الفعلي، باختيار الوقت وعدد الأشخاص مباشرة على الموقع. تلقي تأكيدات فورية وتذكيرات تلقائية عبر البريد الإلكتروني أو الرسائل النصية.</p>
                 </li>
                 <li>
-                    <strong>Gestion des Réservations:</strong>
-                    <p>Consultez, modifiez ou annulez vos réservations facilement à partir de votre compte utilisateur. Gardez un historique de toutes vos réservations pour une gestion simplifiée.</p>
+                    <strong>إدارة الحجوزات:</strong>
+                    <p>استعرض، عدل أو ألغِ حجوزاتك بسهولة من حسابك المستخدم. احتفظ بسجل لجميع حجوزاتك لإدارة مبسطة.</p>
                 </li>
                 <li>
-                    <strong>Offres Spéciales et Programmes de Fidélité:</strong>
-                    <p>Accédez à des offres spéciales exclusives et des réductions dans vos restaurants préférés. Participez à des programmes de fidélité pour accumuler des points et obtenir des récompenses.</p>
+                    <strong>عروض خاصة وبرامج الولاء:</strong>
+                    <p>احصل على عروض خاصة حصرية وخصومات في مطاعمك المفضلة. شارك في برامج الولاء لتجميع النقاط والحصول على مكافآت.</p>
                 </li>
                 <li>
-                    <strong>Avis et Notations:</strong>
-                    <p>Lisez les avis authentiques d'autres utilisateurs pour vous aider à faire votre choix. Laissez vos propres avis et notations pour aider la communauté ReservEAT.</p>
+                    <strong>المراجعات والتقييمات:</strong>
+                    <p>اقرأ المراجعات الأصلية من المستخدمين الآخرين لمساعدتك في اتخاذ قرارك. اترك مراجعاتك وتقييماتك الخاصة لمساعدة مجتمع مائدة بلادي.</p>
                 </li>
                 <li>
-                    <strong>Application Mobile:</strong>
-                    <p>Profitez de toutes les fonctionnalités de ReservEAT sur notre application mobile pour iOS et Android, permettant des réservations en déplacement.</p>
+                    <strong>تطبيق الجوال:</strong>
+                    <p>استفد من جميع ميزات مائدة بلادي على تطبيقنا المحمول لنظامي iOS و Android، مما يتيح لك إجراء الحجوزات أثناء التنقل.</p>
                 </li>
                 <li>
-                    <strong>Sécurité et Confidentialité:</strong>
-                    <p>Vos informations personnelles sont protégées grâce à des mesures de sécurité de pointe. ReservEAT respecte votre vie privée et ne partage pas vos données sans votre consentement.</p>
+                    <strong>الأمان والخصوصية:</strong>
+                    <p>معلوماتك الشخصية محمية بفضل تدابير أمان متقدمة. مائدة بلادي يحترم خصوصيتك ولا يشارك بياناتك دون موافقتك.</p>
                 </li>
             </ul>
         </section>
 
         <section id="why-choose-us">
-            <h2>Pourquoi choisir ReservEAT ?</h2>
+            <h2>لماذا تختار مائدة بلادي؟</h2>
             <ul>
-                <li>Facilité d'utilisation: Une interface simple et intuitive pour des réservations sans tracas.</li>
-                <li>Large sélection: Accès à une vaste gamme de restaurants pour tous les goûts et budgets.</li>
-                <li>Support client: Une équipe de support dédiée pour vous assister 24/7.</li>
+                <li>سهولة الاستخدام: واجهة بسيطة وسهلة الاستخدام لحجوزات بدون متاعب.</li>
+                <li>تشكيلة واسعة: الوصول إلى مجموعة واسعة من المطاعم لتناسب جميع الأذواق والميزانيات.</li>
+                <li>دعم العملاء: فريق دعم مخصص لمساعدتك على مدار الساعة.</li>
             </ul>
-            <p>Rejoignez la communauté ReservEAT dès aujourd'hui et transformez la manière dont vous réservez vos restaurants favoris !</p>
+            <p>انضم إلى مجتمع مائدة بلادي اليوم وقم بتحويل طريقة حجز مطاعمك المفضلة!</p>
         </section>
 
         <section id="contact">
-            <h2>Contactez-nous</h2>
-            <p>Visitez-nous sur : <a href="https://www.reservEAT.com">www.reservEAT.com</a></p>
-            <p>Suivez-nous sur les réseaux sociaux :</p>
+            <h2>اتصل بنا</h2>
+            <p>تابعنا على وسائل التواصل الاجتماعي:</p>
             <ul>
                 <li>Facebook: <a href="https://www.facebook.com/ReservEAT">@ReservEAT</a></li>
                 <li>Instagram: <a href="https://www.instagram.com/ReservEAT">@ReservEAT</a></li>
@@ -86,7 +85,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 ReservEAT - Réservez, Savourez, Profitez!</p>
+        <p>&copy;  مائدة بلادي -احجز، تذوق، استمتع!</p>
     </footer>
 </body>
 </html>

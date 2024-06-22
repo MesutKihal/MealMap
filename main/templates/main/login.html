@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
 {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReservEAT - Connexion</title>
+    <title>مائدة بلادي - تسج</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header>
-        <h1>ReservEAT</h1>
-        <p>Connexion</p>
+        <h1>مائدة بلادي</h1>
+		<br>
+        <p>تسجيل الدخول</p>
     </header>
 
     <main>
         <section id="login">
-            <h2>Connexion</h2>
-            <form action="{% url 'home' %}" method="post">
+            <h2>تسجيل الدخول</h2>
+            <form action="{% url 'login' %}" method="post">
 				{% csrf_token %}
                 <div>
-                    <label for="username">Nom d'utilisateur :</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
+                    <label for="username">إسم المستخدم</label>
+					<input type="text" id="username" name="username" required>
+				</div>
                 <div>
-                    <label for="password">Mot de passe :</label>
+                    <label for="password">كلمة السر</label>
                     <input type="password" id="password" name="password" required>
-                </div>
-                <button id="login-btn" type="submit">Se connecter</button>
+				</div>
+                <button id="login-btn" type="submit">تسجيل الدخول</button>
             </form>
-            <p>Pas encore inscrit ? <a href="{% url 'signup' %}">Créez un compte</a></p>
+            <p>لا تملك حساب ? <a href="{% url 'signup' %}">إنشاء حساب</a></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 ReservEAT - Réservez, Savourez, Profitez!</p>
+        <p>&copy; مائدة بلادي -احجز، تذوق، استمتع!</p>
     </footer>
 </body>
 </html>

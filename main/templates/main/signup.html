@@ -1,42 +1,59 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
 	{% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReservEAT - Inscription</title>
+    <title>مائدة بلادي - التسجيل</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header>
-        <h1>ReservEAT</h1>
-        <p>Inscription</p>
+        <h1>مائدة بلادي</h1>
+		<br>
+        <p>إنشاء حساب</p>
     </header>
 
     <main>
         <section id="signup">
-            <h2>Inscription</h2>
-            <form action="signup_process.php" method="post">
+            <h2>إنشاء حساب</h2>
+            <form action="{% url 'signup' %}" method="post">
+				{% csrf_token %}
                 <div>
-                    <label for="username">Nom d'utilisateur :</label>
+                    <label for="username">إسم المستخدم</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div>
-                    <label for="email">Email :</label>
+                    <label for="email">البريد الإلكتروني</label>
                     <input type="email" id="email" name="email" required>
                 </div>
+				 <div>
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="phone" id="phone" name="phone" required>
+                </div>
                 <div>
-                    <label for="password">Mot de passe :</label>
+                    <label for="password">كلمة السر</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <button type="submit">S'inscrire</button>
+				<div>
+                    <label for="confirm">تأكيد كلمة السر</label>
+                    <input type="password" id="confirm" name="confirm" required>
+                </div>
+				<!-- <div> -->
+					<!-- <label for="select">نوع الحساب</label> -->
+					<!-- <select> -->
+						<!-- <option>زبون</option> -->
+						<!-- <option>مطعم</option> -->
+					<!-- </select> -->
+				<!-- </div> -->
+                <button type="submit">إنشاء حساب</button>
             </form>
-            <p>Déjà inscrit ? <a href="login.html">Connectez-vous</a></p>
+            <p> لديك حساب <a href="{% url 'login' %}">سجل الدخول</a></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 ReservEAT - Réservez, Savourez, Profitez!</p>
+        <p>&copy; مائدة بلادي -احجز، تذوق، استمتع!</p>
     </footer>
 </body>
 </html>

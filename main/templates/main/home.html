@@ -1,131 +1,161 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
 {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReservEAT - Accueil</title>
+    <title>مائدة بلادي - الصفحة الرئيسية</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header>
-		<img height="200" width="200" src="{% static 'img/hero-image.png' %}"></img>
-        <p>Simplifiez vos réservations de restaurants</p>
+        <h2 style="color: white; font-size: 50px;">مائدة بلادي</h2>
+        <p>بسط حجوزاتك في المطاعم</p>
         <nav>
             <ul>
-                <li><a href="home.html">Accueil</a></li>
-                <li><a href="login.html">Connexion</a></li>
-                <li><a href="signup.html">Inscription</a></li>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'profile' %}">الحساب</a></li>
+					<li><a href="{% url 'logout' %}">إنشاء حساب</a></li>
+				{% else %}
+					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
+					<li><a href="{% url 'signup' %}">إنشاء حساب</a></li>
+				{% endif %}
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="hero">
-            <h2>Découvrez et réservez des restaurants facilement</h2>
+            <h2>اكتشف وحجز المطاعم بسهولة</h2>
             <div class="slideshow-container">
                 <div class="mySlides fade">
-                    <img src="{% static 'img/slide1.jpg' %}" alt="Slide 1" class="slide-image">
+                    <img width="100%" height="70%" src="{% static 'img/slide1.jpg' %}" alt="الشريحة 1" class="slide-image">
                 </div>
                 <div class="mySlides fade">
-                    <img src="{% static 'img/slide2.jpg' %}" alt="Slide 2" class="slide-image">
+                    <img width="100%" height="70%" src="{% static 'img/slide2.jpg' %}" alt="الشريحة 2" class="slide-image">
                 </div>
                 <div class="mySlides fade">
-                    <img src="{% static 'img/slide3.jpg' %}" alt="Slide 3" class="slide-image">
+                    <img width="100%" height="70%" src="{% static 'img/slide3.jpg' %}" alt="الشريحة 3" class="slide-image">
                 </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10095;</a>
+                <a class="next" onclick="plusSlides(1)">&#10094;</a>
+            </div>
+            <br>
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span> 
+                <span class="dot" onclick="currentSlide(2)"></span> 
+                <span class="dot" onclick="currentSlide(3)"></span> 
             </div>
         </section>
 
         <section id="search">
-            <h2>Rechercher un restaurant</h2>
+            <h2>ابحث عن مطعم</h2>
             <form action="search_results.html" method="get">
                 <div>
-                    <label for="search-query">Nom du restaurant ou type de cuisine :</label>
+                    <label for="search-query">اسم المطعم أو نوع المطبخ:</label>
                     <input type="text" id="search-query" name="search-query" required>
                 </div>
-                <button type="submit">Rechercher</button>
+                <button type="submit">بحث</button>
             </form>
         </section>
 
         <section id="filter">
-            <h2>Filtrer les résultats</h2>
+            <h2>تصفية النتائج</h2>
             <form action="filter_results.html" method="get">
                 <div>
-                    <label for="location">Localisation :</label>
+                    <label for="location">الموقع:</label>
                     <input type="text" id="location" name="location">
                 </div>
                 <div>
-                    <label for="cuisine">Type de cuisine :</label>
+                    <label for="cuisine">نوع المطبخ:</label>
                     <input type="text" id="cuisine" name="cuisine">
                 </div>
                 <div>
-                    <label for="price">Fourchette de prix :</label>
+                    <label for="price">نطاق الأسعار:</label>
                     <select id="price" name="price">
-                        <option value="">Sélectionner</option>
-                        <option value="low">Économique</option>
-                        <option value="medium">Moyenne</option>
-                        <option value="high">Élevée</option>
+                        <option value="">اختر</option>
+                        <option value="low">اقتصادي</option>
+                        <option value="medium">متوسط</option>
+                        <option value="high">مرتفع</option>
                     </select>
                 </div>
                 <div>
-                    <label for="rating">Évaluation :</label>
+                    <label for="rating">التقييم:</label>
                     <select id="rating" name="rating">
-                        <option value="">Sélectionner</option>
-                        <option value="1">1 étoile</option>
-                        <option value="2">2 étoiles</option>
-                        <option value="3">3 étoiles</option>
-                        <option value="4">4 étoiles</option>
-                        <option value="5">5 étoiles</option>
+                        <option value="">اختر</option>
+                        <option value="1">1 نجمة</option>
+                        <option value="2">2 نجوم</option>
+                        <option value="3">3 نجوم</option>
+                        <option value="4">4 نجوم</option>
+                        <option value="5">5 نجوم</option>
                     </select>
                 </div>
-                <button type="submit">Filtrer</button>
+                <button type="submit">تصفية</button>
             </form>
         </section>
 
         <section id="restaurants">
-            <h2>Restaurants populaires</h2>
+            <h2>المطاعم الشهيرة</h2>
             <div class="restaurant">
-                <img src="{% static 'img/restaurant1.jpg' %}" alt="Restaurant 1">
-                <h3>Marrilan</h3>
-                <p>Type de cuisine: Italienne</p>
-                <p>Évaluation: 4.5 étoiles</p>
-                <button>Réserver</button>
+                <img src="{% static 'img/restaurant1.jpg' %}" alt="مطعم 1">
+                <h3>ماريان</h3>
+                <p>نوع المطبخ: إيطالي</p>
+                <p>التقييم: 4.5 نجوم</p>
+				{% if user.is_authenticated %}
+					<button>احجز</button>
+				{% endif %}
             </div>
             <div class="restaurant">
-                <img src="{% static 'img/restaurant2.jpg' %}" alt="Restaurant 2">
-                <h3>Mirai</h3>
-                <p>Type de cuisine: Japonaise</p>
-                <p>Évaluation: 4.8 étoiles</p>
-                <button>Réserver</button>
+                <img src="{% static 'img/restaurant2.jpg' %}" alt="مطعم 2">
+                <h3>ميراي</h3>
+                <p>نوع المطبخ: ياباني</p>
+                <p>التقييم: 4.8 نجوم</p>
+				{% if user.is_authenticated %}
+					<button>احجز</button>
+				{% endif %}
             </div>
             <div class="restaurant">
-                <img src="{% static 'img/restaurant3.jpg' %}" alt="Restaurant 3">
-                <h3>Chataux D'or</h3>
-                <p>Type de cuisine: Française</p>
-                <p>Évaluation: 4.2 étoiles</p>
-                <button>Réserver</button>
+                <img src="{% static 'img/restaurant3.jpg' %}" alt="مطعم 3">
+                <h3>شاتو دو</h3>
+                <p>نوع المطبخ: فرنسي</p>
+                <p>التقييم: 4.2 نجوم</p>
+				{% if user.is_authenticated %}
+					<button>احجز</button>
+				{% endif %}
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 ReservEAT - Réservez, Savourez, Profitez!</p>
+        <p>&copy; 2024 مائدة بلادي - احجز، استمتع، استفد!</p>
     </footer>
 
     <script>
-        let slideIndex = 0;
-        showSlides();
+        let slideIndex = 1;
+        showSlides(slideIndex);
 
-        function showSlides() {
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
             let i;
             let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";  
             }
-            slideIndex++;
-            if (slideIndex > slides.length) {slideIndex = 1}    
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
             slides[slideIndex-1].style.display = "block";  
-            setTimeout(showSlides, 3000); // Change image every 3 seconds
+            dots[slideIndex-1].className += " active";
         }
     </script>
 </body>
