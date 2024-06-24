@@ -6,7 +6,12 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
     
-
+PRICE_RANGE = (
+                ("low", "إقتصادي"),
+                ("medium", "متوسط"),
+                ("high", "مرتفع")
+)
+    
 class Restaurant(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField(default="")
@@ -15,6 +20,19 @@ class Restaurant(models.Model):
     cuisine = models.CharField(max_length=64, default="unknown")
     phone = models.CharField(max_length=16, default="+xxx-xxx-xxx-xxx")
     email = models.CharField(max_length=64, default="noreply@example.com")
+    map = models.ImageField(upload_to='main/static/img/restaurants/maps/', default=None)
+    price = models.CharField(
+                max_length = 20,
+                choices = PRICE_RANGE,
+                default = 'medium'
+            )
+    wifi = models.BooleanField(default=False)
+    delivary = models.BooleanField(default=False)
+    outdoor = models.BooleanField(default=False)
+    kids = models.BooleanField(default=False)
+    discounts = models.BooleanField(default=False)
+    parking = models.BooleanField(default=False)
+    music = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name
@@ -34,6 +52,7 @@ class Bookings(models.Model):
     gr_code = models.ImageField(upload_to="main/static/img/bookings/", default=None)
     class Meta:
         verbose_name_plural = 'Bookings'
+    
     
     
 # class RestaurantStaff(models.Model):

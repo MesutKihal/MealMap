@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مائدة بلادي</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<script src="https://kit.fontawesome.com/d75b1ad41e.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -32,26 +33,69 @@
 					<img class="gallery-img" src="{{ img }}" alt="{{ name }}">
 				{% endfor %}
 			</div>
-			<div class="flex-column">
+			<div class="flex-column flex-end">
 				<p>التقييم<strong class="badge">{{ rating }}</strong></p>
-				<iframe
-				  id="map"
-				  width="100%"
-				  frameborder="0" style="border:0"
-				  src="https://www.openstreetmap.org/search?whereami=1&query=36.35977%2C6.61535#map=17/36.35977/6.61535" allowfullscreen>
-				</iframe>
+				<img width="40%" src="{{ map }}" alt="{{ name }}">
 			</div>
 		</div>
 	</section>
 	<section>
 		<h2>الوصف</h2>
 		<p>المطبخ: {{ cuisine }}</p>
-		<p>{{ description }}</p>
+		<p class="flex-column">{{ description | safe }}</p>
 		
 		<h2>معلومات إضافية</h2>
 		<p>العنوان: {{ address }}</p>
 		<p style="display: flex; justify-content: flex-end" dir="ltr">{{ phone }} :الهاتف</p>
 		<p>البريد الإلكتروني: {{ email }}</p>
+		<h2>مميزات</h2>
+		<div class="flex-wrap">
+			<span><i class="fa-solid fa-wifi" style="color: #4FFFB0;"></i> الإنترنت</span>
+			<span><i class="fa-solid fa-truck" style="color: #4FFFB0;"></i> خدمة التوصيل</span>
+			<span><i class="fa-solid fa-chair" style="color: #4FFFB0;"></i> مقاعد خارجية</span>
+			<span><i class="fa-solid fa-child" style="color: #4FFFB0;"></i> قائمة الأطفال</span>
+			<span><i class="fa-solid fa-money-bill" style="color: #4FFFB0;"></i> تخفيضات خاصة</span>
+			<span><i class="fa-solid fa-square-parking" style="color: #4FFFB0;"></i> مساحة ركن السيارة</span>
+			<span><i class="fa-solid fa-music" style="color: #4FFFB0;"></i> موسيقى</span>
+		</div>
+	</section>
+	<section>
+		<h2>إحجز</h2>
+		<form>
+			<label for="name">الإسم الكامل</label>
+			<input name="name" id="name" type="text"/>
+			<label for="clients">عدد الزبائن</label>
+			<select name="clients">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+			</select>
+			<div class="flex-row space-around">
+				<div style="width: 50%;">
+					<label for="salle">القاعة</label>
+					<select name="salle">
+						<option>A</option>
+						<option>B</option>
+						<option>C</option>
+						<option>D</option>
+					</select>
+				</div>
+				<div style="width: 50%;">
+					<label for="table">رقم الطاولة</label>
+					<select name="table">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</section>
+	<section>
+		<h2>التعليقات</h2>
 	</section>
 </body>
+	<script src="{% static 'js/details.js' %}"></script>
 </html>

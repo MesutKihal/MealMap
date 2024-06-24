@@ -12,6 +12,26 @@ def index(request):
 # @login_required
 def home(request):
     restaurants = Restaurant.objects.all()
+    
+    search_query = request.GET.get("search-query")
+    price_range = request.GET.get("price")
+    location = request.GET.get("location")
+    cuisine = request.GET.get("cuisine")
+    rating = request.GET.get("rating")
+    # Searching
+    if search_query != None:
+        restaurants = list(Restaurant.objects.filter(name__contains=search_query))
+    # Filtering
+    if price_range == None:
+        price_range = ""
+    if location == None:
+        location = ""
+    if cuisine == None:
+        cuisine = ""
+    if rating == None:
+        rating = 1
+    if price_range != "" or location != "" or cuisine != "" or rating != 1:
+        restaurants = list(Restaurant.objects.filter(price__contains=price_range, address__contains=location, cuisine__contains=cuisine, rating__contains=rating))
     data = []
     for restaurant in restaurants:   
         data.append({
@@ -25,6 +45,7 @@ def home(request):
             "email": restaurant.email,
             "image": str(list(Image.objects.filter(restaurant=restaurant))[0].image)[4:],
         })
+    
     return render(request, 'main/home.html', {'data': data})
 
 def profile(request):
@@ -44,7 +65,8 @@ def details(request, pk):
         "cuisine": restaurant.cuisine,
         "phone": restaurant.phone,
         "email": restaurant.email,
-        "images": [str(img.image)[4:] for img in Image.objects.filter(restaurant=restaurant)],
+        "images": [str(img.image)[4:] for img in list(Image.objects.filter(restaurant=restaurant))[1:]],
+        "map": str(restaurant.map)[4:],
     }
     return render(request, 'main/details.html', context) 
 

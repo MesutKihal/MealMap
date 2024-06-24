@@ -51,18 +51,20 @@
 
         <section id="search">
             <h2>ابحث عن مطعم</h2>
-            <form action="search_results.html" method="get">
+            <form action="{% url 'home' %}" method="get">
                 <div>
                     <label for="search-query">اسم المطعم أو نوع المطبخ:</label>
                     <input type="text" id="search-query" name="search-query" required>
                 </div>
                 <button type="submit">بحث</button>
             </form>
+			<br>
+			<a href="{% url 'home' %}"><button class="green-btn">مسح</button></a>
         </section>
 
         <section id="filter">
             <h2>تصفية النتائج</h2>
-            <form action="filter_results.html" method="get">
+            <form action="{% url 'home' %}" method="get">
                 <div>
                     <label for="location">الموقع:</label>
                     <input type="text" id="location" name="location">
@@ -84,15 +86,22 @@
                     <label for="rating">التقييم:</label>
                     <select id="rating" name="rating">
                         <option value="">اختر</option>
-                        <option value="1">1 نجمة</option>
-                        <option value="2">2 نجوم</option>
-                        <option value="3">3 نجوم</option>
-                        <option value="4">4 نجوم</option>
-                        <option value="5">5 نجوم</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+						<option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
                     </select>
                 </div>
                 <button type="submit">تصفية</button>
             </form>
+			<br>
+			<a href="{% url 'home' %}"><button class="green-btn">مسح</button></a>
         </section>
 
         <section id="restaurants">
@@ -111,9 +120,6 @@
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 مائدة بلادي - احجز، استمتع، استفد!</p>
-    </footer>
 
     <script>
         let slideIndex = 1;
