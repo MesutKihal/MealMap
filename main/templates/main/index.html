@@ -19,6 +19,28 @@
     </header>
 
     <main>
+        <section id="hero">
+            <h2>اكتشف وحجز المطاعم بسهولة</h2>
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <img width="100%" height="70%" src="{% static 'img/slide1.jpg' %}" alt="الشريحة 1" class="slide-image">
+                </div>
+                <div class="mySlides fade">
+                    <img width="100%" height="70%" src="{% static 'img/slide2.jpg' %}" alt="الشريحة 2" class="slide-image">
+                </div>
+                <div class="mySlides fade">
+                    <img width="100%" height="70%" src="{% static 'img/slide3.jpg' %}" alt="الشريحة 3" class="slide-image">
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10095;</a>
+                <a class="next" onclick="plusSlides(1)">&#10094;</a>
+            </div>
+            <br>
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span> 
+                <span class="dot" onclick="currentSlide(2)"></span> 
+                <span class="dot" onclick="currentSlide(3)"></span> 
+            </div>
+        </section>
         <section id="description">
             <h2>الوصف</h2>
             <p>
@@ -30,7 +52,7 @@
             <h2>الخصائص الرئيسية</h2>
             <ul>
                 <li>
-                    <strong>بحث بديهي:</strong>
+                    <strong>البحث:</strong>
                     <p>ابحث عن المطاعم بالاسم، نوع المطبخ، الموقع، أو حتى بالأطباق المحددة. استخدم الفلاتر المتقدمة لتضييق نطاق البحث وفقًا لتفضيلاتك الغذائية، خيارات الأسعار، تقييمات المستخدمين، وأكثر من ذلك.</p>
                 </li>
                 <li>
@@ -84,5 +106,33 @@
     <footer>
         <p>&copy;  مائدة بلادي -احجز، تذوق، استمتع!</p>
     </footer>
+	<script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+    </script>
 </body>
 </html>

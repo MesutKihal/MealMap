@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مائدة بلادي - تسجيل الدخول</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
     <header>
@@ -13,7 +14,27 @@
 		<br>
         <p>تسجيل الدخول</p>
     </header>
-
+	{% for message in messages %}
+		{% if message.tags  == "error" %}
+			<article class="message is-danger">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "success" %}
+			<article class="message is-success">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "info" %}
+			<article class="message is-info">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% endif %}
+	{% endfor %}
     <main>
         <section id="login">
             <h2>تسجيل الدخول</h2>

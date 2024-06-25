@@ -14,7 +14,7 @@
         <nav>
             <ul>
 				{% if user.is_authenticated %}
-					<li><a href="{% url 'profile' %}">الحجوزات</a></li>
+					<li><a href="{% url 'reservation' %}">الحجوزات</a></li>
 					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
 				{% else %}
 					<li><a href="{% url 'index' %}">الرئيسية</a></li>

@@ -15,7 +15,7 @@
             <ul>
 				{% if user.is_authenticated %}
 					<li><a href="{% url 'home' %}">الرئيسية</a></li>
-					<li><a href="{% url 'profile' %}">الحجوزات</a></li>
+					<li><a href="{% url 'reservation' %}">الحجوزات</a></li>
 					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
 				{% else %}
 					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
@@ -26,10 +26,56 @@
     </header>
 	<section id="hero">
 		<h2>الحجوزات</h2>
+		<div id="reservations">
+			{% for booking in data %}
+				<div class="reserve">
+					<img id="{{ booking.id }}" src="{{ booking.qr_code }}" alt="{{ res.name }}">
+					<h4>{{ booking.name }}</h4>
+					<h4>{{ booking.restaurant }}</h4>
+					<h4>{{ booking.date }}</h4>
+					<button onclick="cancelReservation({{ booking.id }})">إلغاء الحجز</button>
+					<button class="green-btn" onclick="downloadImage({{ booking.id }})">تحميل</button>
+				</div>
+			{% endfor %}
+		</div>
 	</section>
-    <footer>
-        <p>&copy; 2024 مائدة بلادي - احجز، استمتع، استفد!</p>
-    </footer>
-	<script></script>
+	<script>
+		function downloadImage(id) {
+		  // Get the image URL
+		  var imageUrl = document.getElementById(id).src;
+
+		  // Create an anchor element (link) to trigger the download
+		  var a = document.createElement('a');
+		  a.href = imageUrl;
+
+		  // Set the filename for the download
+		  var fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+		  a.download = fileName;
+
+		  // Append the anchor element to the body
+		  document.body.appendChild(a);
+
+		  // Trigger the click event to download the image
+		  a.click();
+
+		  // Clean up: Remove the anchor element from the body
+		  document.body.removeChild(a);
+		}
+		
+		function cancelReservation(id)
+		{
+			fetch(`cancel/${id}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				cache: "no-store",
+				body: JSON.stringify({
+					id: id,
+				})
+			}).then(response => response.json()).then(data => console.log(data)).catch(error => console.log(error))
+			window.location.assign("/reservation");
+		}
+	</script>
 </body>
 </html>

@@ -48,8 +48,11 @@ class Image(models.Model):
         
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=64, default="UNKNOWN")
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     gr_code = models.ImageField(upload_to="main/static/img/bookings/", default=None)
+    date = models.CharField(max_length=64, default="UNKNOWN")
+    
     class Meta:
         verbose_name_plural = 'Bookings'
     

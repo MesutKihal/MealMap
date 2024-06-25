@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مائدة بلادي</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 	<script src="https://kit.fontawesome.com/d75b1ad41e.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -16,7 +17,7 @@
             <ul>
 				{% if user.is_authenticated %}
 					<li><a href="{% url 'home' %}">الرئيسية</a></li>
-					<li><a href="{% url 'profile' %}">الحجوزات</a></li>
+					<li><a href="{% url 'reservation' %}">الحجوزات</a></li>
 					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
 				{% else %}
 					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
@@ -25,30 +26,51 @@
             </ul>
         </nav>
     </header>
+	{% for message in messages %}
+		{% if message.tags  == "error" %}
+			<article class="message is-danger">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "success" %}
+			<article class="message is-success">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "info" %}
+			<article class="message is-info">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% endif %}
+	{% endfor %}
 	<section>
-		<h1>{{ name }}</h1>
+		<h1 class="is-size-4">{{ name }}</h1>
 		<div class="flex-row">
 			<div class="gallery">
 				{% for img in images %}
 					<img class="gallery-img" src="{{ img }}" alt="{{ name }}">
 				{% endfor %}
 			</div>
-			<div class="flex-column flex-end">
-				<p>التقييم<strong class="badge">{{ rating }}</strong></p>
-				<img width="40%" src="{{ map }}" alt="{{ name }}">
+			<div>
+				<p>التقييم<strong style="width: 20%;" class="badge">{{ rating }}</strong></p>
+				<img class="map" src="{{ map }}" alt="{{ name }}">
 			</div>
 		</div>
 	</section>
 	<section>
-		<h2>الوصف</h2>
+		<h2 class="is-size-4">الوصف</h2>
 		<p>المطبخ: {{ cuisine }}</p>
 		<p class="flex-column">{{ description | safe }}</p>
 		
-		<h2>معلومات إضافية</h2>
+		<h2 class="is-size-4">معلومات إضافية</h2>
 		<p>العنوان: {{ address }}</p>
 		<p style="display: flex; justify-content: flex-end" dir="ltr">{{ phone }} :الهاتف</p>
 		<p>البريد الإلكتروني: {{ email }}</p>
-		<h2>مميزات</h2>
+		<h2 class="is-size-4">مميزات</h2>
 		<div class="flex-wrap">
 			<span><i class="fa-solid fa-wifi" style="color: #4FFFB0;"></i> الإنترنت</span>
 			<span><i class="fa-solid fa-truck" style="color: #4FFFB0;"></i> خدمة التوصيل</span>
@@ -60,42 +82,53 @@
 		</div>
 	</section>
 	<section>
-		<h2>إحجز</h2>
-		<form>
+		<h2 class="is-size-4">إحجز</h2>
+		<form method="POST">
+			{% csrf_token %}
 			<label for="name">الإسم الكامل</label>
 			<input name="name" id="name" type="text"/>
 			<label for="clients">عدد الزبائن</label>
 			<select name="clients">
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
 			</select>
 			<div class="flex-row space-around">
 				<div style="width: 50%;">
 					<label for="salle">القاعة</label>
 					<select name="salle">
-						<option>A</option>
-						<option>B</option>
-						<option>C</option>
-						<option>D</option>
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="D">D</option>
+						<option value="E">E</option>
 					</select>
 				</div>
 				<div style="width: 50%;">
 					<label for="table">رقم الطاولة</label>
 					<select name="table">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
 					</select>
 				</div>
 			</div>
+			<label name="reserv-time">الوقت و التاريخ</label>
+			<input type="datetime-local" name="reserv-time">
+			<hr>
+			<button class="green-btn" type="submit">تأكيد الحجز</button>
 		</form>
 	</section>
 	<section>
-		<h2>التعليقات</h2>
+		<h2 class="is-size-4">التعليقات</h2>
 	</section>
 </body>
-	<script src="{% static 'js/details.js' %}"></script>
 </html>

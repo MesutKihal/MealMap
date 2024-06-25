@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مائدة بلادي - التسجيل</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
     <header>
@@ -13,7 +14,27 @@
 		<br>
         <p>إنشاء حساب</p>
     </header>
-
+	{% for message in messages %}
+		{% if message.tags  == "error" %}
+			<article class="message is-danger">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "success" %}
+			<article class="message is-success">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "info" %}
+			<article class="message is-info">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% endif %}
+	{% endfor %}
     <main>
         <section id="signup" class="panel">
             <h2>إنشاء حساب</h2>
@@ -39,13 +60,6 @@
                     <label for="confirm">تأكيد كلمة السر</label>
                     <input type="password" id="confirm" name="confirm" required>
                 </div>
-				<!-- <div> -->
-					<!-- <label for="select">نوع الحساب</label> -->
-					<!-- <select> -->
-						<!-- <option>زبون</option> -->
-						<!-- <option>مطعم</option> -->
-					<!-- </select> -->
-				<!-- </div> -->
                 <button type="submit">إنشاء حساب</button>
             </form>
             <p> لديك حساب <a href="{% url 'login' %}">سجل الدخول</a></p>

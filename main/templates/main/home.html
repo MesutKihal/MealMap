@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مائدة بلادي - الصفحة الرئيسية</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
     <header>
@@ -15,7 +16,7 @@
             <ul>
 				{% if user.is_authenticated %}
 					<li><a href="{% url 'home' %}">الرئيسية</a></li>
-					<li><a href="{% url 'profile' %}">الحجوزات</a></li>
+					<li><a href="{% url 'reservation' %}">الحجوزات</a></li>
 					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
 				{% else %}
 					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
@@ -24,31 +25,28 @@
             </ul>
         </nav>
     </header>
-
-    <main>
-        <section id="hero">
-            <h2>اكتشف وحجز المطاعم بسهولة</h2>
-            <div class="slideshow-container">
-                <div class="mySlides fade">
-                    <img width="100%" height="70%" src="{% static 'img/slide1.jpg' %}" alt="الشريحة 1" class="slide-image">
-                </div>
-                <div class="mySlides fade">
-                    <img width="100%" height="70%" src="{% static 'img/slide2.jpg' %}" alt="الشريحة 2" class="slide-image">
-                </div>
-                <div class="mySlides fade">
-                    <img width="100%" height="70%" src="{% static 'img/slide3.jpg' %}" alt="الشريحة 3" class="slide-image">
-                </div>
-                <a class="prev" onclick="plusSlides(-1)">&#10095;</a>
-                <a class="next" onclick="plusSlides(1)">&#10094;</a>
-            </div>
-            <br>
-            <div style="text-align:center">
-                <span class="dot" onclick="currentSlide(1)"></span> 
-                <span class="dot" onclick="currentSlide(2)"></span> 
-                <span class="dot" onclick="currentSlide(3)"></span> 
-            </div>
-        </section>
-
+	{% for message in messages %}
+		{% if message.tags  == "error" %}
+			<article class="message is-danger">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "success" %}
+			<article class="message is-success">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% elif message.tags == "info" %}
+			<article class="message is-info">
+				<p class="message-body">
+					{{ message }}
+				</p>
+			</article>
+		{% endif %}
+	{% endfor %}
+    <main> 
         <section id="search">
             <h2>ابحث عن مطعم</h2>
             <form action="{% url 'home' %}" method="get">
@@ -120,34 +118,5 @@
         </section>
     </main>
 
-
-    <script>
-        let slideIndex = 1;
-        showSlides(slideIndex);
-
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}    
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";  
-            dots[slideIndex-1].className += " active";
-        }
-    </script>
 </body>
 </html>

@@ -1,15 +1,19 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Restaurant, Bookings, Image
 from .forms import AddUser, LogUser
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import re
+import qrcode
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 
 def index(request):
     return render(request, 'main/index.html')
    
-# @login_required
+@login_required
 def home(request):
     restaurants = Restaurant.objects.all()
     
@@ -49,7 +53,19 @@ def home(request):
     return render(request, 'main/home.html', {'data': data})
 
 def profile(request):
-    return render(request, 'main/profile.html')
+    bookings = Bookings.objects.filter(user=request.user)
+    data = []
+    for booking in bookings:
+        data.append({
+            "id": booking.id,
+            "name": booking.name,
+            "user": booking.user,
+            "restaurant": booking.restaurant,
+            "qr_code": str(booking.gr_code)[4:],
+            "date": booking.date,
+            
+        })
+    return render(request, 'main/profile.html', {'data': data})
 
 def logout(request):
     auth_logout(request)
@@ -68,6 +84,23 @@ def details(request, pk):
         "images": [str(img.image)[4:] for img in list(Image.objects.filter(restaurant=restaurant))[1:]],
         "map": str(restaurant.map)[4:],
     }
+    if request.method == "POST":
+        name = request.POST.get("name")
+        clients = request.POST.get("clients")
+        salle = request.POST.get("salle")
+        table = request.POST.get("table")
+        datetime = request.POST.get("reserv-time")
+        data = f"""
+                username: {request.user}
+                name:   {name}
+                N° client:  {clients}
+                table:    {salle}{table}
+                date:    {datetime}
+                """
+        qr = qrcode.make(data)
+        qr.save(f"main/static/img/bookings/{hash(request.user.username)}.png")
+        Bookings.objects.create(user=request.user, name=name, restaurant=restaurant, gr_code=f"main/static/img/bookings/{hash(request.user.username)}.png", date=datetime)
+        messages.success(request,'تم الحجز بنجاح')
     return render(request, 'main/details.html', context) 
 
 def login(request):
@@ -78,14 +111,14 @@ def login(request):
         try:
             user = User.objects.get(username=username)
             if user.password != password:
-                messages.error(request,'Invalid password')
+                messages.error(request,'كلمة السر خاطئة')
                 return redirect("/login")
         except User.DoesNotExist:
             user = None
         #If authentication is successful Login
         if user is not None:
             auth_login(request, user)
-            messages.success(request, f"{username} Logged In Successfully!")
+            messages.success(request, f"{username} سجل الدخول بنجاح")
             return redirect("home")
         else:
             messages.error(request, "Cannot Log In!")
@@ -112,16 +145,23 @@ def signup(request):
                     if password == confirm:
                         new = User(username=username, email=email, password=password)
                         new.save()
-                        messages.success(request, "Account Created Successfully!")
+                        messages.success(request, "تم إنشاء الحساب بنجاح")
                     else:
-                        messages.error(request, "Passwords Don't match!")
+                        messages.error(request, "كلمتي السر لا يتوافقان")
                 else:
-                    messages.error(request, "Invalid password!")
-                    messages.info(request, "Passwords should contain any of the four character types:   uppercase letters: (A-Z), lowercase letters: (a-z), numbers (0-9), and symbols (~`! @#$%^&*()_-+={[}]|\:;\"'<,>.?/)")
+                    messages.error(request, "كلمة السر غير صالحة")
+                    messages.info(request, "كلمة السر يجب أن تتكون من كلمات كبيرة/كلمات صغيرةّ/رموز")
             else:
-                messages.error(request, "Invalid Email!")
-                messages.info(request,"Acceptable email prefix formats: Allowed characters: letters (a-z), numbers, underscores, periods, and dashes. Acceptable email domain formats Allowed characters: letters, numbers, dashes. The last portion of the domain must be at least two characters, for example: .com, .org, .cc")
+                messages.error(request, "البريد الإلكتروني غير صالح")
+                
         return redirect("/signup")
     else:
         form = AddUser()
     return render(request, 'main/signup.html', {'form': form})
+
+@csrf_exempt
+def cancelReservation(request, id):
+    message = "canceled"
+    booking = get_object_or_404(Bookings, pk=id)
+    booking.delete()
+    return JsonResponse(message, safe=False)
