@@ -7,16 +7,17 @@
     <title>مائدة بلادي - الصفحة الرئيسية</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
 </head>
 <body>
     <header>
-        <h2 class="header-white">مائدة بلادي</h2>
-        <p>بسط حجوزاتك في المطاعم</p>
+        <!-- <h2 class="header-white">مائدة بلادي</h2> -->
+		<img src="{% static 'img/header.png' %}" style="width: 20%;" alt="Icon">
+        <p>اكتشف المطاعم بسهولة</p>
         <nav>
             <ul>
 				{% if user.is_authenticated %}
 					<li><a href="{% url 'home' %}">الرئيسية</a></li>
-					<li><a href="{% url 'reservation' %}">الحجوزات</a></li>
 					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
 				{% else %}
 					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
@@ -46,12 +47,34 @@
 			</article>
 		{% endif %}
 	{% endfor %}
-    <main> 
+    <main>
+        <section id="hero">
+            
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <img width="100%" height="70%" src="{% static 'img/slide1.jpg' %}" alt="الشريحة 1" class="slide-image">
+                </div>
+                <div class="mySlides fade">
+                    <img width="100%" height="70%" src="{% static 'img/slide2.jpg' %}" alt="الشريحة 2" class="slide-image">
+                </div>
+                <div class="mySlides fade">
+                    <img width="100%" height="70%" src="{% static 'img/slide3.jpg' %}" alt="الشريحة 3" class="slide-image">
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10095;</a>
+                <a class="next" onclick="plusSlides(1)">&#10094;</a>
+            </div>
+            <br>
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span> 
+                <span class="dot" onclick="currentSlide(2)"></span> 
+                <span class="dot" onclick="currentSlide(3)"></span> 
+            </div>
+        </section>
         <section id="search">
-            <h2>ابحث عن مطعم</h2>
+            <h2 class="is-size-4">ابحث عن مطعم</h2>
             <form action="{% url 'home' %}" method="get">
                 <div>
-                    <label for="search-query">اسم المطعم أو نوع المطبخ:</label>
+                    <label for="search-query">اسم المطعم</label>
                     <input type="text" id="search-query" name="search-query" required>
                 </div>
                 <button type="submit">بحث</button>
@@ -61,41 +84,63 @@
         </section>
 
         <section id="filter">
-            <h2>تصفية النتائج</h2>
+            <h2 class="is-size-4">تصفية النتائج</h2>
             <form action="{% url 'home' %}" method="get">
                 <div>
                     <label for="location">الموقع:</label>
-                    <input type="text" id="location" name="location">
+                    <!-- <input type="text" id="location" name="location"> -->
+					<select name="location" id="location">
+						<option value="">---</option>
+						<option value="Constantine">قسنطينة</option>
+						<option value="El Khroub">الخروب</option>
+						<option value="Ain Smara">عين سمارة</option>
+						<option value="Ouled Rahmoun">أولاد رحمون</option>
+						<option value="Ain Abid">عين عبيد</option>
+						<option value="Ibn Badis">ابن باديس</option>
+						<option value="Zighoud Youcef">زيغود يوسف</option>
+						<option value="Beni Hamidane">بني حميدان</option>
+						<option value="Hamma Bouziane">حامة بوزيان</option>
+						<option value="Didouche Mourad">ديدوش مراد</option>
+						<option value="Ibn Ziad">ابن زياد</option>
+						<option value="Messaoud Boudjeriou">مسعود بوجريو</option>
+					</select>
                 </div>
                 <div>
                     <label for="cuisine">نوع المطبخ:</label>
-                    <input type="text" id="cuisine" name="cuisine">
+                    <!-- <input type="text" id="cuisine" name="cuisine"> -->
+					<select name="cuisine">
+						<option value="">---</option>
+						<option value="continental">قاري</option>
+						<option value="asiatique">أسيوي</option>
+						<option value="arabe">عربي</option>
+						<option value="algérienne traditionnelle">جزائري تقليدي</option>
+					</select>
                 </div>
-                <div>
-                    <label for="price">نطاق الأسعار:</label>
-                    <select id="price" name="price">
-                        <option value="">اختر</option>
-                        <option value="low">اقتصادي</option>
-                        <option value="medium">متوسط</option>
-                        <option value="high">مرتفع</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="rating">التقييم:</label>
-                    <select id="rating" name="rating">
-                        <option value="">اختر</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-						<option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </div>
+                <!-- <div> -->
+                    <!-- <label for="price">نطاق الأسعار:</label> -->
+                    <!-- <select id="price" name="price"> -->
+                        <!-- <option value="">اختر</option> -->
+                        <!-- <option value="low">اقتصادي</option> -->
+                        <!-- <option value="medium">متوسط</option> -->
+                        <!-- <option value="high">مرتفع</option> -->
+                    <!-- </select> -->
+                <!-- </div> -->
+                <!-- <div> -->
+                    <!-- <label for="rating">التقييم:</label> -->
+                    <!-- <select id="rating" name="rating"> -->
+                        <!-- <option value="">اختر</option> -->
+                        <!-- <option value="1">1</option> -->
+                        <!-- <option value="2">2</option> -->
+                        <!-- <option value="3">3</option> -->
+                        <!-- <option value="4">4</option> -->
+                        <!-- <option value="5">5</option> -->
+						<!-- <option value="6">6</option> -->
+                        <!-- <option value="7">7</option> -->
+                        <!-- <option value="8">8</option> -->
+                        <!-- <option value="9">9</option> -->
+                        <!-- <option value="10">10</option> -->
+                    <!-- </select> -->
+                <!-- </div> -->
                 <button type="submit">تصفية</button>
             </form>
 			<br>
@@ -103,20 +148,45 @@
         </section>
 
         <section id="restaurants">
-            <h2>المطاعم الشهيرة</h2>
+            <!-- <h2>المطاعم الشهيرة</h2> -->
 			{% for res in data %}
 				<div class="restaurant" data-id="{{ res.id }}">
 					<img src="{{ res.image }}" alt="{{ res.name }}">
 					<a style="text-decoration: none;color: #000;" href="{% url 'details' res.id %}"><h3>{{ res.name }}</h3></a>
 					<p>المطبخ: {{ res.cuisine }}</p>
 					<p>التقييم: {{ res.rating }}</p>
-					{% if user.is_authenticated %}
-						<a href="{% url 'details' res.id %}"><button>احجز</button></a>
-					{% endif %}
+					<!-- <a href="{% url 'details' res.id %}"><button>احجز</button></a> -->
 				</div>
 			{% endfor %}
         </section>
     </main>
+	<script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
 
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+    </script>
 </body>
 </html>

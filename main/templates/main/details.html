@@ -7,17 +7,18 @@
     <title>مائدة بلادي</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
 	<script src="https://kit.fontawesome.com/d75b1ad41e.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <h2 class="header-white">مائدة بلادي</h2>
-        <p>بسط حجوزاتك في المطاعم</p>
+        <!-- <h2 class="header-white">مائدة بلادي</h2> -->
+		<img src="{% static 'img/header.png' %}" style="width: 20%;" alt="Icon">
+        <p>اكتشف المطاعم بسهولة</p>
         <nav>
             <ul>
 				{% if user.is_authenticated %}
 					<li><a href="{% url 'home' %}">الرئيسية</a></li>
-					<li><a href="{% url 'reservation' %}">الحجوزات</a></li>
 					<li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
 				{% else %}
 					<li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
@@ -49,31 +50,39 @@
 	{% endfor %}
 	<section>
 		<h1 class="is-size-4">{{ name }}</h1>
+		<strong style="width:20%;" class="badge">التقييم {{ rating }}</strong>
 		<div class="flex-row">
 			<div class="gallery">
 				{% for img in images %}
 					<img class="gallery-img" src="{{ img }}" alt="{{ name }}">
 				{% endfor %}
 			</div>
-			<div>
-				<p>التقييم<strong style="width: 20%;" class="badge">{{ rating }}</strong></p>
-				<img class="map" src="{{ map }}" alt="{{ name }}">
-			</div>
+				<!-- <img class="map" src="{{ map }}" alt="{{ name }}"> -->
 		</div>
 	</section>
+	<section id="plates">
+		<h2 class="is-size-2">أشهر الأطباق</h2>
+		{% for plate in plates %}
+			<div class="restaurant">
+				<img style="height: 60%;" src="{{ plate.image}}" alt="{{ plate.name }}">
+				<h3>{{ plate.name }}</h3>
+				<h3>{{ plate.price }} دج</h3>
+			</div>
+		{% endfor %}
+	</section>
 	<section>
-		<h2 class="is-size-4">الوصف</h2>
-		<p>المطبخ: {{ cuisine }}</p>
+		<h2 class="is-size-2">الوصف</h2>
+		<!-- <p>المطبخ: {{ cuisine }}</p> -->
 		<p class="flex-column">{{ description | safe }}</p>
 		
-		<h2 class="is-size-4">معلومات إضافية</h2>
+		<h2 class="is-size-2">معلومات إضافية</h2>
 		<p>العنوان: {{ address }}</p>
 		<p style="display: flex; justify-content: flex-end" dir="ltr">{{ phone }} :الهاتف</p>
 		<p>البريد الإلكتروني: {{ email }}</p>
-		<h2 class="is-size-4">مميزات</h2>
+		<h2 class="is-size-2">مميزات</h2>
 		<div class="flex-wrap">
 			<span><i class="fa-solid fa-wifi" style="color: #4FFFB0;"></i> الإنترنت</span>
-			<span><i class="fa-solid fa-truck" style="color: #4FFFB0;"></i> خدمة التوصيل</span>
+			<!-- <span><i class="fa-solid fa-truck" style="color: #4FFFB0;"></i> خدمة التوصيل</span> -->
 			<span><i class="fa-solid fa-chair" style="color: #4FFFB0;"></i> مقاعد خارجية</span>
 			<span><i class="fa-solid fa-child" style="color: #4FFFB0;"></i> قائمة الأطفال</span>
 			<span><i class="fa-solid fa-money-bill" style="color: #4FFFB0;"></i> تخفيضات خاصة</span>
@@ -81,54 +90,114 @@
 			<span><i class="fa-solid fa-music" style="color: #4FFFB0;"></i> موسيقى</span>
 		</div>
 	</section>
+	<!-- <section> -->
+		<!-- <h2 class="is-size-4">إحجز</h2> -->
+		<!-- <form method="POST"> -->
+			<!-- {% csrf_token %} -->
+			<!-- <label for="name">الإسم الكامل</label> -->
+			<!-- <input name="name" id="name" type="text"/> -->
+			<!-- <label for="clients">عدد الزبائن</label> -->
+			<!-- <select name="clients"> -->
+				<!-- <option value="1">1</option> -->
+				<!-- <option value="2">2</option> -->
+				<!-- <option value="3">3</option> -->
+				<!-- <option value="4">4</option> -->
+			<!-- </select> -->
+			<!-- <div class="flex-row space-around"> -->
+				<!-- <div style="width: 50%;"> -->
+					<!-- <label for="salle">القاعة</label> -->
+					<!-- <select name="salle"> -->
+						<!-- <option value="A">A</option> -->
+						<!-- <option value="B">B</option> -->
+						<!-- <option value="C">C</option> -->
+						<!-- <option value="D">D</option> -->
+						<!-- <option value="E">E</option> -->
+					<!-- </select> -->
+				<!-- </div> -->
+				<!-- <div style="width: 50%;"> -->
+					<!-- <label for="table">رقم الطاولة</label> -->
+					<!-- <select name="table"> -->
+						<!-- <option value="1">1</option> -->
+						<!-- <option value="2">2</option> -->
+						<!-- <option value="3">3</option> -->
+						<!-- <option value="4">4</option> -->
+						<!-- <option value="5">5</option> -->
+						<!-- <option value="6">6</option> -->
+						<!-- <option value="7">7</option> -->
+						<!-- <option value="8">8</option> -->
+						<!-- <option value="9">9</option> -->
+						<!-- <option value="10">10</option> -->
+					<!-- </select> -->
+				<!-- </div> -->
+			<!-- </div> -->
+			<!-- <label name="reserv-time">الوقت و التاريخ</label> -->
+			<!-- <input type="datetime-local" name="reserv-time"> -->
+			<!-- <hr> -->
+			<!-- <button class="green-btn" type="submit">تأكيد الحجز</button> -->
+		<!-- </form> -->
+	<!-- </section> -->
 	<section>
-		<h2 class="is-size-4">إحجز</h2>
+		<h2 class="is-size-2">أضف تقييمك</h2>
 		<form method="POST">
 			{% csrf_token %}
-			<label for="name">الإسم الكامل</label>
-			<input name="name" id="name" type="text"/>
-			<label for="clients">عدد الزبائن</label>
-			<select name="clients">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
+			<label>جودة الخدمة</label>
+			<select class="rating" name="service" required>
+				<option value="">--</option>
+				<option class="star" value="1">&#9733;</option>
+				<option class="star" value="2">&#9733;&#9733;</option>
+				<option class="star" value="3">&#9733;&#9733;&#9733;</option>
+				<option class="star" value="4">&#9733;&#9733;&#9733;&#9733;</option>
+				<option class="star" value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
 			</select>
-			<div class="flex-row space-around">
-				<div style="width: 50%;">
-					<label for="salle">القاعة</label>
-					<select name="salle">
-						<option value="A">A</option>
-						<option value="B">B</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-						<option value="E">E</option>
-					</select>
-				</div>
-				<div style="width: 50%;">
-					<label for="table">رقم الطاولة</label>
-					<select name="table">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-					</select>
-				</div>
-			</div>
-			<label name="reserv-time">الوقت و التاريخ</label>
-			<input type="datetime-local" name="reserv-time">
+			<label>جودة الطعام</label>
+			<select class="rating" name="food" required>
+				<option value="">--</option>
+				<option class="star" value="1">&#9733;</option>
+				<option class="star" value="2">&#9733;&#9733;</option>
+				<option class="star" value="3">&#9733;&#9733;&#9733;</option>
+				<option class="star" value="4">&#9733;&#9733;&#9733;&#9733;</option>
+				<option class="star" value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+			</select>
+			<label>النظافة</label>
+			<select class="rating" name="hygene" required>
+				<option value="">--</option>
+				<option class="star" value="1">&#9733;</option>
+				<option class="star" value="2">&#9733;&#9733;</option>
+				<option class="star" value="3">&#9733;&#9733;&#9733;</option>
+				<option class="star" value="4">&#9733;&#9733;&#9733;&#9733;</option>
+				<option class="star" value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+			</select>
+			<label>الأجواء</label>
+			<select class="rating" name="atmosphere" required>
+				<option value="">--</option>
+				<option class="star" value="1">&#9733;</option>
+				<option class="star" value="2">&#9733;&#9733;</option>
+				<option class="star" value="3">&#9733;&#9733;&#9733;</option>
+				<option class="star" value="4">&#9733;&#9733;&#9733;&#9733;</option>
+				<option class="star" value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+			</select>
 			<hr>
-			<button class="green-btn" type="submit">تأكيد الحجز</button>
+			<button class="green-btn" type="submit">أضف</button>
 		</form>
 	</section>
 	<section>
-		<h2 class="is-size-4">التعليقات</h2>
+		<h2 class="is-size-2">التعليقات</h2>
+		<h1>أضف تعليقك</h1>
+		<form method="POST">
+			{% csrf_token %}
+			<textarea id="comment" name="content" required></textarea>
+			<button class="green-btn" type="submit">أضف</button>
+		</form>
+		{% for comment in comments %}
+			<div class="comment">
+				<p><strong>{{ comment.user }}</strong>  {{ comment.created_at }}</p>
+				<p>{{ comment.content }}</p>
+			</div>
+			<hr>
+		{% endfor %}
 	</section>
+	<script>
+		
+	</script>
 </body>
 </html>

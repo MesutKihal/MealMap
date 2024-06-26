@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Restaurant, Bookings, Image
+from .models import User, Restaurant, Bookings, Image, Plate, Comment
 from .forms import AddUser, LogUser
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib import messages
@@ -18,24 +18,18 @@ def home(request):
     restaurants = Restaurant.objects.all()
     
     search_query = request.GET.get("search-query")
-    price_range = request.GET.get("price")
     location = request.GET.get("location")
     cuisine = request.GET.get("cuisine")
-    rating = request.GET.get("rating")
     # Searching
     if search_query != None:
         restaurants = list(Restaurant.objects.filter(name__contains=search_query))
     # Filtering
-    if price_range == None:
-        price_range = ""
     if location == None:
         location = ""
     if cuisine == None:
         cuisine = ""
-    if rating == None:
-        rating = 1
-    if price_range != "" or location != "" or cuisine != "" or rating != 1:
-        restaurants = list(Restaurant.objects.filter(price__contains=price_range, address__contains=location, cuisine__contains=cuisine, rating__contains=rating))
+    if location != "" or cuisine != "":
+        restaurants = list(Restaurant.objects.filter(province__contains=location, cuisine__contains=cuisine))
     data = []
     for restaurant in restaurants:   
         data.append({
@@ -82,25 +76,42 @@ def details(request, pk):
         "phone": restaurant.phone,
         "email": restaurant.email,
         "images": [str(img.image)[4:] for img in list(Image.objects.filter(restaurant=restaurant))[1:]],
-        "map": str(restaurant.map)[4:],
+        
+        "plates": [{"name": plate.name, "image": str(plate.image)[4:], "price": plate.price} for plate in Plate.objects.filter(restaurant=restaurant)],
+        "comments": [comment for comment in Comment.objects.filter(restaurant=restaurant)],
     }
     if request.method == "POST":
-        name = request.POST.get("name")
-        clients = request.POST.get("clients")
-        salle = request.POST.get("salle")
-        table = request.POST.get("table")
-        datetime = request.POST.get("reserv-time")
-        data = f"""
-                username: {request.user}
-                name:   {name}
-                N° client:  {clients}
-                table:    {salle}{table}
-                date:    {datetime}
-                """
-        qr = qrcode.make(data)
-        qr.save(f"main/static/img/bookings/{hash(request.user.username)}.png")
-        Bookings.objects.create(user=request.user, name=name, restaurant=restaurant, gr_code=f"main/static/img/bookings/{hash(request.user.username)}.png", date=datetime)
-        messages.success(request,'تم الحجز بنجاح')
+        user = request.user
+        content = request.POST.get("content")
+        food = request.POST.get("food")
+        hygene = request.POST.get("hygene")
+        service = request.POST.get("service")
+        atmosphere = request.POST.get("atmosphere")
+        
+        if content != None:
+            Comment.objects.create(user=user, content=content, restaurant=restaurant)
+        if food != None and hygene != None and service != None and atmosphere != None:
+            new = int(((((int(food) + int(hygene) + int(service) + int(atmosphere)) * 2) / 4) + restaurant.rating) / 2)
+            restaurant.rating = new
+            restaurant.save()
+
+    # if request.method == "POST":
+        # name = request.POST.get("name")
+        # clients = request.POST.get("clients")
+        # salle = request.POST.get("salle")
+        # table = request.POST.get("table")
+        # datetime = request.POST.get("reserv-time")
+        # data = f"""
+                # username: {request.user}
+                # name:   {name}
+                # N° client:  {clients}
+                # table:    {salle}{table}
+                # date:    {datetime}
+                # """
+        # qr = qrcode.make(data)
+        # qr.save(f"main/static/img/bookings/{hash(request.user.username)}.png")
+        # Bookings.objects.create(user=request.user, name=name, restaurant=restaurant, gr_code=f"main/static/img/bookings/{hash(request.user.username)}.png", date=datetime)
+        # messages.success(request,'تم الحجز بنجاح')
     return render(request, 'main/details.html', context) 
 
 def login(request):

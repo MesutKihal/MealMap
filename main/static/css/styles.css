@@ -20,6 +20,7 @@ header {
     color: #fff;
     padding: 20px 0;
     text-align: center;
+	height: 20%;
 }
 
 header h1 {
@@ -169,6 +170,12 @@ footer {
     flex-wrap: wrap;
 }
 
+#plates {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
 #reservations {
     display: flex;
     justify-content: space-around;
@@ -200,6 +207,24 @@ footer {
     padding: 20px;
     text-align: center;
     width: 300px;
+}
+
+.comment {
+	border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+}
+
+textarea {
+	height: 50%; /* Adjust the height as needed */
+	width: 100%;
+	resize: vertical; /* Allow vertical resizing */
+	font-size: 22px; /* Custom font size */
+	line-height: 1.4; /* Line height for readability */
+	padding: 10%; /* Padding inside the textarea */
+	border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .restaurant img {
@@ -283,7 +308,7 @@ footer {
 }
 
 .gallery img {
-	width: 100%;
+	width: 80%;
 	height: auto;
 	display: block;
 	border-radius: 8px;
@@ -352,4 +377,17 @@ footer {
 }
 
 
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: right;
+}
+.star {
+    display: inline-block;
+    font-size: 30px;
+    color: gold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
 
